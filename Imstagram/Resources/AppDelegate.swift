@@ -6,15 +6,40 @@
 //
 
 import UIKit
-
+import Firebase
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        return true
+        
+        FirebaseApp.configure()
+        
+        if Auth.auth().currentUser == nil {
+          
+                let window =  UIWindow(frame: UIScreen.main.bounds)
+                let navController = UINavigationController(rootViewController: SignInViewController())
+                navController.isNavigationBarHidden = false
+                navController.navigationBar.tintColor = .black
+                window.rootViewController = navController
+                self.window = window
+                return true
+            
+            }else {
+                let window =  UIWindow(frame: UIScreen.main.bounds)
+                let navController = UINavigationController(rootViewController:MainTabbarViewController())
+                navController.isNavigationBarHidden = false
+                navController.navigationBar.tintColor = .black
+                window.rootViewController = navController
+                window.makeKeyAndVisible()
+                self.window = window
+                return true
+            }
+        
+        
+     
     }
 
     // MARK: UISceneSession Lifecycle
